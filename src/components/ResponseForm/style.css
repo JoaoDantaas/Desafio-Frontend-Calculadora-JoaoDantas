@@ -1,0 +1,18 @@
+.container-responseform {
+  margin-top: 80px;
+  /* background-color: rgba(73, 13, 13, 0.254); */
+  margin-left: 25px;
+}
+
+.h2-responseform {
+  font-size: 18px;
+  text-decoration: underline 1px blue;
+  color: rgba(4, 94, 219, 0.807);
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 18px;
+  color: rgba(4, 94, 219, 0.807);
+  font-weight: 300;
+}

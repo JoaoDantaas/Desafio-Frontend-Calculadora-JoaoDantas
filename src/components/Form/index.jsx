@@ -2,17 +2,17 @@ import { useIndexContext } from "../../context/index";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
+import "./style.css";
 
 const Form = () => {
-  const { simulate, values } = useIndexContext();
+  const { simulate } = useIndexContext();
 
   const formSchema = yup.object().shape({
     amount: yup.string().required("Amount obrigatório"),
     installments: yup.string().required("Installments obrigatório"),
     mdr: yup.string().required("MDR obrigatório"),
   });
-  // console.log(values);
+
   const {
     register,
     handleSubmit,
@@ -21,52 +21,39 @@ const Form = () => {
     resolver: yupResolver(formSchema),
   });
 
-  // const simulate = async (data) => {
-  //   console.log(data);
-  //   await axios
-  //     .post("https://frontend-challenge-7bu3nxh76a-uc.a.run.app", data)
-  //     .then((response) => {
-  //       console.log(response);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
   return (
     <>
+      <h1 className="h1-form">Simule sua Antecipação</h1>
       <form onSubmit={handleSubmit(simulate)}>
-        <div>
+        <div className="div-form">
           <label>Informe o valor da venda *</label>
           <input
-            type="number"
             className="input"
-            placeholder="a"
+            placeholder="Informe o valor"
             {...register("amount")}
           />
-          <h3>{errors.amount?.message}</h3>
+          <h3>{errors.amount?.message ? errors.amount?.message : ""}</h3>
         </div>
-        <div>
+        <div className="div-form div-max">
           <label>Em quantas parcelas *</label>
           <input
-            type="text"
             className="input"
-            placeholder="b"
+            placeholder="Informe quantas parcelas"
             {...register("installments")}
           />
+          <h2 className="h2-max">Máximo de 12 parcelas</h2>
           <h3>{errors.installments?.message}</h3>
         </div>
-        <div>
-          <label>Informe o percentual de MDR</label>
+        <div className="div-form">
+          <label>Informe o percentual de MDR *</label>
           <input
-            type="text"
             className="input"
-            placeholder="c"
+            placeholder="Informe o percentual"
             {...register("mdr")}
           />
           <h3>{errors.mdr?.message}</h3>
         </div>
-        <button>Cadastrar</button>
+        <button>Calcular</button>
       </form>
     </>
   );
