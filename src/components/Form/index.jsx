@@ -8,9 +8,18 @@ const Form = () => {
   const { simulate } = useIndexContext();
 
   const formSchema = yup.object().shape({
-    amount: yup.string().required("Amount obrigatório"),
-    installments: yup.string().required("Installments obrigatório"),
-    mdr: yup.string().required("MDR obrigatório"),
+    amount: yup
+      .number("Valor de venda tem que ser um número")
+      .required("Valor de venda obrigatório")
+      .min(1000, "Valor de venda te que ser maior que 1000"),
+    installments: yup
+      .number("Parcela tem que ser um número")
+      .required("Parcela obrigatória")
+      .max(12, "Máximo de parcelas 12"),
+    mdr: yup
+      .number("MDR tem que ser um número")
+      .required("MDR obrigatório")
+      .max(100, "MDR tem que ser menordo que 100"),
   });
 
   const {
@@ -20,7 +29,7 @@ const Form = () => {
   } = useForm({
     resolver: yupResolver(formSchema),
   });
-
+  console.log(errors);
   return (
     <>
       <h1 className="h1-form">Simule sua Antecipação</h1>
