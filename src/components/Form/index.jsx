@@ -9,19 +9,28 @@ const Form = () => {
 
   const formSchema = yup.object().shape({
     amount: yup
-      .number("Valor de venda tem que ser um número")
+      .number()
+      .typeError("Valor de venda tem que ser um número")
       .required("Valor de venda obrigatório")
-      .min(1000, "Valor de venda te que ser maior que 1000"),
+      .min(1000, "Valor de venda te que ser maior que 1000")
+      .positive("Valor de venda tem que ser positivo")
+      .integer("Valor de venda tem que ser inteiro"),
     installments: yup
-      .number("Parcela tem que ser um número")
+      .number()
+      .typeError("Parcela tem que ser um número")
       .required("Parcela obrigatória")
-      .max(12, "Máximo de parcelas 12"),
+      .max(12, "Máximo de parcelas 12")
+      .positive("Parcela tem que ser positivo")
+      .integer("Parcela tem que ser inteiro"),
     mdr: yup
-      .number("MDR tem que ser um número")
+      .number()
+      .typeError("MDR tem que ser um número")
       .required("MDR obrigatório")
-      .max(100, "MDR tem que ser menordo que 100"),
+      .max(100, "MDR tem que ser menordo que 100")
+      .positive("MDR tem que ser positivo")
+      .integer("MDR tem que ser inteiro"),
+    days: yup.array().min(1).nullable().optional(),
   });
-
   const {
     register,
     handleSubmit,
@@ -29,7 +38,6 @@ const Form = () => {
   } = useForm({
     resolver: yupResolver(formSchema),
   });
-  console.log(errors);
   return (
     <>
       <h1 className="h1-form">Simule sua Antecipação</h1>
@@ -61,6 +69,17 @@ const Form = () => {
             {...register("mdr")}
           />
           <h3>{errors.mdr?.message}</h3>
+        </div>
+        <div className="div-form div-max">
+          <label>Informe os dias que quer saber</label>
+          <input
+            className="input"
+            placeholder="Informe os dias"
+            {...register("days")}
+          />
+          <h2 className="h2-max">
+            Colocar dias dentro de colchetes e com vírgulas
+          </h2>
         </div>
         <button>Calcular</button>
       </form>
